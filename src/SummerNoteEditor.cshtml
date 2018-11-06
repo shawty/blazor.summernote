@@ -1,0 +1,35 @@
+﻿@using Blazor.SummerNote
+
+<textarea id="@myid">@EditorContent</textarea>
+
+@functions {
+
+  [Parameter]
+  private string EditorContent { get; set; }
+
+  [Parameter]
+  private Action<string> EditorContentChanged { get; set; }
+
+  private string myid { get; set; } = $"BlazorSummerNote_{new Random().Next(0, 1000000).ToString()}";
+
+  [Parameter]
+  private Action<string> OnEditorChanged { get; set; }
+
+  protected override void OnAfterRender()
+  {
+    SummerNoteJsInterop.initialiseEditor(myid, EditorContent);
+    SummerNoteJsInterop.EditorUpdate += ThisEditorUpdate;
+  }
+
+  private void ThisEditorUpdate(object sender, string editorText)
+  {
+    EditorContent = editorText;
+    OnEditorChanged?.Invoke(editorText);
+  }
+
+  public string GetEditorText()
+  {
+    return EditorContent;
+  }
+
+}
