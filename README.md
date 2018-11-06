@@ -43,7 +43,7 @@ At this point you can use the tag in your page or component by doing the followi
 
     <div class="form-group">
       <label for="Description" class="control-label">Description</label>
-      <SummerNoteEditor EditorContent="@initalContent" OnEditorChanged="@contentCHangeHandler"></SummerNoteEditor>
+      <SummerNoteEditor EditorContent="@initalContent" OnEditorChanged="@contentChangeHandler"></SummerNoteEditor>
     </div>
     
     ....
@@ -53,9 +53,9 @@ At this point you can use the tag in your page or component by doing the followi
       string initialContent = "<p>Some HTML markup</p>";
       string updatedContent = "";
     
-      void UpdateContent(string newContent)
+      void contentChangeHandler(string newContent)
       {
-        selectedMap.Description = newContent;
+        updatedContent = newContent;
       }
     
     }
